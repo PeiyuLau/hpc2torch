@@ -93,7 +93,7 @@ def test(test_shape, axis, test_dtype, eps, device):
                 ctypes.c_float
             ]
             import numpy as np
-            np_array = np.zeros(test_shape, dtype=np.int32)
+            np_array = np.array(test_shape, dtype=np.int32)
             ctypes_array = np_array.ctypes.data_as(ctypes.POINTER(ctypes.c_int))
             custom_layernorm_time = \
             performance.BangProfile((lib.layernorm_cnnl_f32, (input_ptr, scale_ptr, bias_ptr, output_ptr, ctypes_array, ndim, axis, eps)))
@@ -170,11 +170,11 @@ test_cases = [
 
         ((700, 1200), 1, torch.float32, 1e-5, 'mlu'),
         #((700, 1200, 24), 0, torch.float32, 1e-5, 'mlu'),
-        #((700, 1200, 24), 2, torch.float32, 1e-5, 'mlu'),
+        ((700, 1200, 24), 2, torch.float32, 1e-5, 'mlu'),
 
-        #((700, 1200, 24), 1, torch.float16, 1e-5, 'mlu'),
+        ((700, 1200, 24), 1, torch.float16, 1e-5, 'mlu'),
         #((700, 1200, 24), 0, torch.float16, 1e-5, 'mlu'),
-        #((700, 1200, 24), 2, torch.float16, 1e-5, 'mlu'),
+        ((700, 1200, 24), 2, torch.float16, 1e-5, 'mlu'),
 
         ((7, 12, 24), 1, torch.float32, 1e-5, 'cpu'),
         ((7, 12, 24), 0, torch.float32, 1e-5, 'cpu'),
